@@ -74,3 +74,5 @@ frontend/.next/
 frontend/.next-qa/
 frontend/out/
 frontend/build/
+
+*.tsbuildinfo
