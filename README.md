@@ -1,88 +1,147 @@
-# Pecunia AgroTech · versão 2
+# Pecunia AgroTech
 
-Aplicação local para o Tema 3 do Hackathon UFJF 2026: análise econômica e financeira da pecuária leiteira. Interface em português brasileiro, código e contratos em inglês. Frontend Next.js/React/TypeScript e backend Python 3.12+/FastAPI/Pydantic v2/SQLite. Não utiliza serviços externos durante a operação.
+> **Hackathon UFJF 2026 — Tema 3: Análise Econômica e Financeira da Pecuária Leiteira**
 
-## Executar neste computador
+Aplicação local e 100% offline para gestão, planejamento financeiro e diagnóstico especialista da pecuária leiteira. Possui interface em português brasileiro, com bases de código e contratos distribuídos nos repositórios do [**Frontend**](https://github.com/pecunia-agrotech/pecunia-frontend), [**Backend**](https://github.com/pecunia-agrotech/pecunia-backend) e [**Documentação/ADRs**](https://github.com/pecunia-agrotech/pecunia-docs).
 
-1. Encerre a versão anterior com **Ctrl+C no terminal em que ela foi iniciada**. O iniciador não encerra processos existentes nas portas 3000 e 8000.
-2. Abra o Terminal e entre na pasta do projeto:
+---
 
-```bash
-cd "/Users/lucasrocha/Documents/Codex/2026-10-20/role-atue-como-um-desenvolvedor-senior/outputs/pecunia-agrotech"
-./START.command
-```
+## 🗺️ Repositórios e Navegação
 
-3. Aguarde a mensagem de inicialização e abra **http://localhost:3000**. A API fica em **http://localhost:8000/api/v1/health**.
-4. Use Ctrl+C para encerrar os dois servidores.
+Acesse diretamente os repositórios oficiais da organização no GitHub:
 
-Também é possível dar dois cliques em `START.command` no Finder. Esta versão não usa Streamlit nem o caminho antigo `work/.venv/bin/streamlit`.
+| Módulo / Repositório | Descrição | Link do Repositório | Links Locais |
+| ----- | ----- | ----- | ----- |
+| 🐍 **Backend Engine** | API REST em FastAPI, Pydantic v2, SQLite e Motor de Inferência (Regras R01–R07). | [**pecunia-backend**](https://github.com/pecunia-agrotech/pecunia-backend) | [`backend/`](./backend/) • [`tests/`](./backend/tests/) • [`openapi.json`](./backend/openapi.json) |
+| ⚛️ **Frontend Application** | Interface gráfica em Next.js (App Router), React, Tailwind CSS e Shadcn UI. | [**pecunia-frontend**](https://github.com/pecunia-agrotech/pecunia-frontend) | [`frontend/`](./frontend/) • [`src/`](./frontend/src/) • [`tests/`](./frontend/tests/) |
+| 📚 **Documentação & ADRs** | Especificações de arquitetura, decisões técnicas (ADRs), requisitos e relatórios. | [**pecunia-docs**](https://github.com/pecunia-agrotech/pecunia-docs) | [`docs/`](./docs/) • [`architecture.md`](./docs/architecture.md) • [`requirements.md`](./docs/requirements.md) |
+| 🛠️ **Scripts & Automação** | Utilitários de verificação de contratos OpenAPI/TypeScript e geração de DTOs. | — | [`scripts/`](./scripts/) |
 
-## Preparar em outro computador
+### Estrutura Geral do Projeto
 
-Instale Python 3.12+ e Node.js 20.9+; Node 24 foi usado na validação. A instalação inicial requer internet. Na pasta do projeto:
+| Arquivo / Pasta | Finalidade |
+| ----- | ----- |
+| 📁 [`backend/`](./backend/) | Módulo do Backend ([Repositório GitHub](https://github.com/pecunia-agrotech/pecunia-backend)). |
+| 📁 [`frontend/`](./frontend/) | Módulo do Frontend ([Repositório GitHub](https://github.com/pecunia-agrotech/pecunia-frontend)). |
+| 📁 [`docs/`](./docs/) | Documentação e ADRs ([Repositório GitHub](https://github.com/pecunia-agrotech/pecunia-docs)). |
+| 📁 [`scripts/`](./scripts/) | Scripts de checagem e sincronização de contratos API/TypeScript. |
+| 📄 [`.gitignore`](./.gitignore) | Regras para ignorar arquivos temporários, caches de build (`.next`, `__pycache__`) e banco local. |
+| 📄 [`README.md`](./README.md) | Documentação principal com guia de instalação, arquitetura, testes e escopo. |
+| 📄 [`SHADCN-LICENSE.md`](./SHADCN-LICENSE.md) | Licença de reutilização dos componentes visuais do Shadcn UI. |
+| 📄 [`START.command`](./START.command) / [`START.ps1`](./START.ps1) | Scripts de execução automática da aplicação para macOS/Linux e Windows. |
+| 📄 [`setup.sh`](./setup.sh) / [`setup.ps1`](./setup.ps1) | Scripts de preparação inicial de dependências do ambiente. |
+| 📄 [`package.json`](./package.json) / [`package-lock.json`](./package-lock.json) | Gerenciamento de versões no ambiente Node.js na raiz. |
+| 📄 [`run_local.py`](./run_local.py) | Script orquestrador em Python para inicialização simultânea dos servidores. |
+| 📄 [`backup_database.py`](./backup_database.py) | Utilitário para backup seguro do banco de dados SQLite em modo WAL. |
 
+---
+
+## 🚀 Como Rodar a Aplicação
+
+### Pré-requisitos
+
+* **Python 3.12+** (gerenciamento via `uv`)
+* **Node.js 20.9+** (Node 24 utilizado na validação)
+* Gerenciador de dependências `uv` (`pip install uv`)
+
+> *Nota:* A instalação inicial de dependências requer conexão com a internet. Após a configuração, a aplicação opera 100% offline.
+
+### Execução Automática
+
+#### 🐧 Linux / 🍎 macOS
 ```bash
 chmod +x setup.sh START.command
 ./setup.sh
 ./START.command
 ```
 
-O script prepara o ambiente com `uv sync --locked`, instala o frontend por `npm ci`, verifica contratos e gera o build. Depois disso, a execução normal é offline. As versões reproduzíveis estão em `backend/uv.lock` e `frontend/package-lock.json`.
+#### 🪟 Windows (PowerShell)
+```powershell
+.\setup.ps1
+.\START.ps1
+```
 
-Para desenvolvimento, em terminais separados:
+O script realiza o alinhamento de dependências via `uv sync --locked` no [**Backend**](https://github.com/pecunia-agrotech/pecunia-backend), instala os pacotes do [**Frontend**](https://github.com/pecunia-agrotech/pecunia-frontend) via `npm ci`, valida os contratos de API e gera o build final.
 
+> **Pontos de Acesso:**
+> - **Interface Web (Frontend):** [http://localhost:3000](http://localhost:3000)
+> - **API Healthcheck (Backend):** [http://localhost:8000/api/v1/health](http://localhost:8000/api/v1/health)
+> - **Especificação OpenAPI (Swagger):** [http://localhost:8000/docs](http://localhost:8000/docs) ou no arquivo [`backend/openapi.json`](./backend/openapi.json)
+
+---
+
+### Módulo de Desenvolvimento (Modo Dev)
+
+Para executar os serviços em terminais separados com suporte a *hot-reload*:
+
+#### 1. Backend ([`pecunia-backend`](https://github.com/pecunia-agrotech/pecunia-backend))
 ```bash
 cd backend
 uv sync --locked
 uv run uvicorn main:app --reload --port 8000
 ```
 
+#### 2. Frontend ([`pecunia-frontend`](https://github.com/pecunia-agrotech/pecunia-frontend))
 ```bash
 cd frontend
 npm ci
 npm run dev
 ```
 
-O frontend usa `NEXT_PUBLIC_API_URL=http://localhost:8000`, configurável em `frontend/.env.local` a partir de `.env.example`. Alterar essa variável exige novo build. Para desenvolvimento em outra porta local, configure `PECUNIA_FRONTEND_ORIGIN` no backend com uma origem HTTP de loopback. Não exponha estes servidores sem autenticação à rede pública.
+> **Variáveis de Ambiente:**  
+> O frontend utiliza `NEXT_PUBLIC_API_URL=http://localhost:8000`, configurável em [`frontend/.env.local`](./frontend/.env.example). Alterar essa variável exige um novo build. Para portas customizadas, ajuste `PECUNIA_FRONTEND_ORIGIN` no backend.
 
-## Usar o produto
+---
 
-- **Lançamentos:** registre receitas e despesas; venda de leite exige litros positivos. O caixa do dia utiliza o rateio real daquele mês.
-- **Calendário financeiro:** selecione um dia, consulte os movimentos, edite ou exclua mediante confirmação. Alterações retroativas atualizam o fechamento correspondente.
-- **Fechamento & DRE:** consulte receitas, variáveis, fixos, resultado, custo por litro, evolução diária e distribuição de gastos. Exporte CSV ou relatório executivo Markdown.
-- **Análises & diagnósticos:** consulte indicadores, regras R01–R07, evidências e explicações COMO/PORQUE.
-- **Simulações:** crie um cenário vazio ou copie somente o mês selecionado do contexto de origem. Altere seus registros e configurações independentemente do histórico real.
-- **Configurações:** informe custos fixos, vacas em lactação e preço do insumo. Salve por mês e contexto. Valores digitados não afetam o resultado antes da confirmação do banco.
+## 💻 Módulos do Produto e Uso
 
-O seletor de contexto distingue **Histórico real**, **Demonstração** e **Cenário hipotético**. Os resultados nunca somam esses contextos. Campos sem informação aparecem como indisponíveis; não são convertidos em zero.
+* **Lançamentos:** Registre receitas e despesas com validações específicas (venda de leite exige volume positivo em litros). O caixa diário utiliza o rateio real daquele mês.
+* **Calendário Financeiro:** Seleção diária com histórico detalhado de movimentos, permitindo edições e exclusões com recálculo automático retroativo.
+* **Fechamento & DRE:** Painel gerencial com receitas, despesas variáveis/fixas, margens, custo por litro de leite e exportação em CSV ou relatório executivo em Markdown.
+* **Análises & Diagnósticos:** Motor de inferência especialista baseado nas Regras R01–R07, com evidências e explicações no formato *COMO* / *PORQUE*.
+* **Simulações:** Criação de cenários hipotéticos independentes a partir do histórico real ou do zero para projeções financeiras.
+* **Configurações:** Definição mensal e por contexto de custos fixos, vacas em lactação e preço de insumos.
 
-## Banco, migração e backup
+> **Isolamento de Contextos:** O seletor de contexto separa explicitamente **Histórico Real**, **Demonstração** e **Cenário Hipotético**. Os dados de diferentes contextos jamais são somados ou mesclados.
 
-O novo banco é `backend/data/farm.db`, com esquema em inglês e versão 2. `PECUNIA_DB_PATH` pode apontar para um banco de teste separado. Não há acesso direto do navegador ao SQLite.
+---
 
-Na primeira inicialização padrão, se existir `backend/data/fazenda.db` da versão anterior, o backend faz backup e importa os registros para `farm.db`, preservando IDs, centavos, versões, descrições e identificação de simulação. O arquivo anterior permanece intacto. A migração nesta entrega foi testada sobre uma cópia de 74 registros; o banco ativo não foi migrado enquanto o servidor anterior continuava em execução. Veja `docs/migration-validation.json`.
+## 🗄️ Banco de Dados, Migração e Backup
 
-Custos legados de meses com contextos mistos recebem sinalização para revisão. Número de vacas e preço do insumo desconhecidos não são inventados. Vendas antigas sem volume continuam preservadas e precisam ser corrigidas antes dos indicadores dependentes de litros.
+* **Banco de Dados Principal:** [`backend/data/farm.db`](./backend/data/) (esquema em inglês, versão 2). O caminho pode ser alterado via variável `PECUNIA_DB_PATH`.
+* **Migração Automática:** Se existir um banco legado (`backend/data/fazenda.db`), a aplicação realiza backup e migra automaticamente os registros para o `farm.db`. Veja os detalhes de validação da migração em [`docs/migration-validation.json`](./docs/migration-validation.json).
+* **Restauração de Demonstração:** No menu *Simulações*, é possível resetar a base de demonstração digitando `RESTAURAR DEMONSTRAÇÃO`, gerando backup preventivo sem afetar o histórico real.
 
-Sem banco anterior, o contexto real começa vazio e a demonstração recebe 30 dias de dados persistidos. Reiniciar não duplica o seed. Para restaurar somente a demonstração, abra Simulações, confirme a operação e digite **RESTAURAR DEMONSTRAÇÃO**. A operação gera backup e preserva o histórico real e os demais cenários.
+### Backup Manual
 
-Backup manual consistente, inclusive com SQLite em WAL:
+Para gerar uma cópia de segurança consistente (com suporte ao modo SQLite WAL):
 
+**Linux / macOS:**
 ```bash
 backend/.venv/bin/python backup_database.py
 ```
 
-Os backups ficam em `backups/`. Para recuperar, encerre os servidores, guarde o banco atual e seus arquivos WAL/SHM, restaure a cópia no caminho configurado e reinicie. Não substitua um banco aberto. O ZIP de código não contém bancos privados, backups ou dependências.
+**Windows (PowerShell):**
+```powershell
+backend\.venv\Scripts\python.exe backup_database.py
+```
 
-## Verificações
+*Os arquivos de backup são salvos no diretório `/backups`.*
 
+---
+
+## 🧪 Verificação e Qualidade de Código
+
+### Backend ([`pecunia-backend`](https://github.com/pecunia-agrotech/pecunia-backend))
 ```bash
 cd backend
 uv run pytest -q
 uv run ruff check .
 uv run mypy src main.py
 ```
+*Testes localizados em [`backend/tests/`](./backend/tests/).*
 
+### Frontend ([`pecunia-frontend`](https://github.com/pecunia-agrotech/pecunia-frontend))
 ```bash
 cd frontend
 npm run typecheck
@@ -91,17 +150,29 @@ npm test
 npm run contracts:check
 npm run build
 ```
+*Testes localizados em [`frontend/tests/`](./frontend/tests/).*
 
-Para regenerar contratos após mudar DTOs: `npm run contracts`. Para E2E, inicie os dois servidores, prepare o Chromium com `npx playwright install chromium` e execute `npm run test:e2e`. Use exclusivamente um banco descartável para esses testes: o roteiro cria e remove registros.
+* **Regeneração de Contratos TypeScript:** `npm run contracts` (no diretório frontend via script em [`scripts/`](./scripts/)).
+* **Testes E2E (Playwright):** `npx playwright install chromium` e `npm run test:e2e` (utilizar banco descartável).
 
-Resultado desta entrega: **46 testes de backend e 19 de frontend aprovados**; tipos, lint, contratos e build aprovados. Os 2 roteiros Playwright não chegaram a executar: o macOS bloqueou a criação do processo Chromium com `MachPortRendezvousServer: Permission denied`. A verificação visual complementar ocorreu no navegador integrado. Responsividade automatizada e navegação integral por teclado permanecem sem aprovação E2E neste ambiente; não são declaradas validadas.
+> **Resultado da Validação:** **46 testes de backend** e **19 testes de frontend** aprovados com 100% de sucesso em checagens de tipos, linting, validação de contratos OpenAPI e build final. Detalhes completos em [`docs/verification.md`](./docs/verification.md).
 
-## Documentação
+---
 
-- `docs/architecture.md`: arquitetura, fórmulas e decisões provisórias.
-- `docs/requirements.md`: rastreabilidade RF01–RF10.
-- `docs/verification.md`: evidências e limites da validação.
-- `backend/openapi.json`: contrato completo; disponível também em `/openapi.json` com a API iniciada.
-- `docs/dashboard.png` e `docs/calendar.png`: capturas da interface integrada.
+## 📚 Documentação Técnica Detalhada
 
-Escopo: análise gerencial por data de lançamento, sem integração bancária, tributação, autenticação multiusuário ou previsão biológica. O antigo protótipo Streamlit continua separado desta aplicação.
+Acesse a documentação técnica completa localizada no repositório [**pecunia-docs**](https://github.com/pecunia-agrotech/pecunia-docs):
+
+* 📐 [**`docs/architecture.md`**](./docs/architecture.md) — Arquitetura de Software (Clean Architecture), decisões de design (ADRs) e fórmulas financeiras/zootécnicas.
+* 📋 [**`docs/requirements.md`**](./docs/requirements.md) — Matriz de Rastreabilidade dos Requisitos Funcionais (RF01–RF10).
+* 🔍 [**`docs/verification.md`**](./docs/verification.md) — Evidências, logs e relatórios de validação dos testes unitários, de integração e E2E.
+* 📄 [**docs/openapi.json`**](./backend/openapi.json) — Especificação técnica OpenAPI 3.0 completa da API REST.
+* 🖼️ Capturas de Tela: [**Dashboard**](./docs/dashboard.png) e [**Calendário Financeiro**](./docs/calendar.png).
+
+---
+
+## 🎯 Escopo da Entrega
+
+**Incluído:** Análise gerencial local por data de lançamento, DRE gerencial completo, fluxo de caixa, simulação de cenários, motor de inferência especialista com explicações e operação offline.
+
+**Fora do Escopo:** Integração bancária automatizada, módulos tributários/fiscais, autenticação multiusuário na nuvem ou modelos de previsão biológica. O protótipo legado em Streamlit permanece arquivado separadamente.
