@@ -1,0 +1,59 @@
+{
+  "name": "@pecunia-agrotech/frontend",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1 --port 3000",
+    "build": "next build --webpack",
+    "start": "next start --hostname 127.0.0.1 --port 3000",
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "playwright test",
+    "test": "vitest run",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write src tests *.ts *.mjs *.mts package.json",
+    "contracts": "../backend/.venv/bin/python ../scripts/export_openapi.py && openapi-typescript ../backend/openapi.json -o src/core/types/api.generated.ts",
+    "contracts:check": "../backend/.venv/bin/python ../scripts/check_contracts.py"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5",
+    "@tailwindcss/postcss": "^4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cn": "^0.5.0",
+    "date-fns": "^4",
+    "lucide-react": "latest",
+    "next": "latest",
+    "radix-ui": "latest",
+    "react": "latest",
+    "react-day-picker": "^10.0.2",
+    "react-dom": "latest",
+    "react-hook-form": "^7",
+    "react-markdown": "^10.1.0",
+    "recharts": "^3",
+    "tailwind-merge": "^3",
+    "tailwindcss": "^4",
+    "tw-animate-css": "^1",
+    "zod": "^4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "latest",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.8",
+    "@types/node": "^24",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^10.13.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "jsdom": "^30.1.3",
+    "openapi-typescript": "^7.13.0",
+    "prettier": "^3.9.10",
+    "typescript": "^5",
+    "typescript-eslint": "^8.72.0",
+    "vitest": "^5.0.5"
+  },
+  "engines": {
+    "node": ">=20.9"
+  }
+}

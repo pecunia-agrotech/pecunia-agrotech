@@ -1,0 +1,76 @@
+# Dependências
+node_modules/
+frontend/node_modules/
+
+# Build e artefatos do Next.js / Frontend
+.next/
+frontend/.next/
+out/
+frontend/out/
+build/
+frontend/build/
+dist/
+frontend/dist/
+
+# Variáveis de ambiente e logs
+.env
+.env.local
+.env.development.local
+.env.production.local
+frontend/.env
+frontend/.env.local
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.eslintcache
+
+# Testes e Relatórios (Vitest & Playwright)
+coverage/
+frontend/coverage/
+test-results/
+frontend/test-results/
+playwright-report/
+frontend/playwright-report/
+blob-report/
+frontend/blob-report/
+.vitest/
+frontend/.vitest/
+
+# Arquivos empacotados do Repomix / AI tools
+repomix-output*
+
+# Backend Python & Caches
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Banco de dados SQLite local e backups de desenvolvimento
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+backend/data/*.db
+
+# IDEs e sistema operacional
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Builds e artefatos temporários do Next.js
+frontend/.next/
+frontend/.next-qa/
+frontend/out/
+frontend/build/
